@@ -6,7 +6,9 @@ import millify from "millify";
 import { Typography, Select, Col, Row } from "antd";
 
 import {
-  useGetCryptoDetailsQuery,
+  Coin,
+  CryptoDetail as CryptoDetailType,
+  cryptoRequest,
   useGetCryptoHistoryQuery,
 } from "src/services/cryptoApi";
 import {
@@ -21,26 +23,25 @@ import {
   TrophyOutlined,
 } from "@ant-design/icons";
 import LineChart from "src/components/LineChart";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-function CryptoDetail() {
+function CryptoDetail({
+  data: cryptoDetails,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const { coinId } = router.query;
 
   const [timePeriod, setTimePeriod] = useState("7d");
-  const { data, isFetching } = useGetCryptoDetailsQuery(String(coinId));
+
   const { data: coinHistory } = useGetCryptoHistoryQuery({
     coinId: String(coinId),
     timePeriod,
   });
-  const cryptoDetails = data?.data?.coin;
-
-  if (isFetching || !cryptoDetails || !coinHistory) return <>Loading...</>;
 
   const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
-  console.log(coinHistory);
   const stats = [
     {
       title: "Price to USD",
@@ -105,7 +106,7 @@ function CryptoDetail() {
     <Col className="coin-detail-container">
       <Col className="coin-heading-container">
         <Title level={2} className="coin-name">
-          {data?.data?.coin.name} ({data?.data?.coin.slug}) Price
+          {cryptoDetails.name} ({cryptoDetails.slug}) Price
         </Title>
         <p>
           {cryptoDetails.name} live price in US Dollar (USD). View value
@@ -124,11 +125,13 @@ function CryptoDetail() {
           </Option>
         ))}
       </Select>
-      <LineChart
-        coinHistory={coinHistory}
-        currentPrice={millify(Number(cryptoDetails.price))}
-        coinName={cryptoDetails.name}
-      />
+      {coinHistory && (
+        <LineChart
+          coinHistory={coinHistory}
+          currentPrice={millify(Number(cryptoDetails.price))}
+          coinName={cryptoDetails.name}
+        />
+      )}
       <Col className="stats-container">
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">
@@ -197,5 +200,19 @@ function CryptoDetail() {
     </Col>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{ data: Coin }> = async (
+  context
+) => {
+  const coinId = context.params?.coinId;
+  const response = await cryptoRequest.get<CryptoDetailType>(`/coin/${coinId}`);
+  const data = response.data.data.coin;
+
+  return {
+    props: {
+      data,
+    },
+  };
+};
 
 export default CryptoDetail;
