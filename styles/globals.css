@@ -17,7 +17,7 @@ a:hover{
   color: var(--pink) !important;
 }
 
-.app{
+.app{  
   display: flex;
   overflow: hidden;
 }
@@ -51,8 +51,10 @@ a:hover{
   align-items: center;
   width: 100%;
 }
-.logo{
-  margin:0 0 0 15px;
+
+h2.logo {
+  margin-left: 15px;
+  margin-bottom: 0;
 }
 .logo a{
  color: white;

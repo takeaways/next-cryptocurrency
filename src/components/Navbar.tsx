@@ -11,7 +11,7 @@ import {
 function Navbar() {
   return (
     <div className="nav-container">
-      <div className="log-container">
+      <div className="logo-container">
         <Avatar src={"/images/cryptocurrency.png"} size="large" />
         <Typography.Title level={2} className="logo">
           <Link href="/">
@@ -27,7 +27,7 @@ function Navbar() {
         </Menu.Item>
         <Menu.Item icon={<FundOutlined />}>
           <Link href="/cryptocurrencies">
-            <a>Cryptocurrency</a>
+            <a>Cryptocurrencies</a>
           </Link>
         </Menu.Item>
         <Menu.Item icon={<MoneyCollectOutlined />}>

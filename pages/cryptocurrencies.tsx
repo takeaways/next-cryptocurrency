@@ -1,7 +1,8 @@
 import React from "react";
+import Cryptocurrencies from "src/components/Cryptocurrencies";
 
-function Cryptocurrencies() {
-  return <div>Cryptocurrencies</div>;
+function CryptocurrenciesPage() {
+  return <Cryptocurrencies />;
 }
 
-export default Cryptocurrencies;
+export default CryptocurrenciesPage;
