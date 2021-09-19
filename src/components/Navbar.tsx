@@ -20,22 +20,22 @@ function Navbar() {
         </Typography.Title>
       </div>
       <Menu theme="dark">
-        <Menu.Item icon={<HomeOutlined />}>
+        <Menu.Item key={"home"} icon={<HomeOutlined />}>
           <Link href="/">
             <a>Home</a>
           </Link>
         </Menu.Item>
-        <Menu.Item icon={<FundOutlined />}>
+        <Menu.Item key={"cryptocurrencies"} icon={<FundOutlined />}>
           <Link href="/cryptocurrencies">
             <a>Cryptocurrencies</a>
           </Link>
         </Menu.Item>
-        <Menu.Item icon={<MoneyCollectOutlined />}>
+        <Menu.Item key={"exchanges"} icon={<MoneyCollectOutlined />}>
           <Link href="/exchanges">
             <a>Exchanges</a>
           </Link>
         </Menu.Item>
-        <Menu.Item icon={<BulbOutlined />}>
+        <Menu.Item key={"news"} icon={<BulbOutlined />}>
           <Link href="/news">
             <a>News</a>
           </Link>

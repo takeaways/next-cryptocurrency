@@ -67,12 +67,12 @@ const Home: NextPage = () => {
           Latest Crypto News
         </Title>
         <Title level={3} className="show-more">
-          <Link href="/cryptocurrencies">
+          <Link href="/news">
             <a>Show More</a>
           </Link>
         </Title>
       </div>
-      <News />
+      <News simplified />
     </>
   );
 };
