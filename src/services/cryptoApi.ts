@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+import axios from "axios";
 const cryptoApiHeaders = {
   "x-rapidapi-host": "coinranking1.p.rapidapi.com",
   "x-rapidapi-key": "43a2c1be47msh89726474b6bf275p12fc02jsn38f79e2bfc30",
@@ -7,9 +7,13 @@ const cryptoApiHeaders = {
 
 const baseUrl = "https://coinranking1.p.rapidapi.com";
 
+export const cryptoRequest = axios.create({
+  baseURL: `${baseUrl}`,
+  headers: cryptoApiHeaders,
+});
+
 const createRequest = (url: string) => ({ url, headers: cryptoApiHeaders });
 
-type Be = Omit<Crypto, "data">;
 export const cryptoApi = createApi({
   reducerPath: "cryptoApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
@@ -44,18 +48,20 @@ export type CryptoHistory = {
 export type Crypto = {
   data: {
     coins: Coin[];
-    stats: {
-      total: number;
-      offset: number;
-      limit: number;
-      order: "desc";
-      base: string;
-      totalMarkets: number;
-      totalExchanges: number;
-      totalMarketCap: number;
-      total24hVolume: number;
-    };
+    stats: Stats;
   };
+};
+
+export type Stats = {
+  total: number;
+  offset: number;
+  limit: number;
+  order: "desc";
+  base: string;
+  totalMarkets: number;
+  totalExchanges: number;
+  totalMarketCap: number;
+  total24hVolume: number;
 };
 
 export interface Coin {

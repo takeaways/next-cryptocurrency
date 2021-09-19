@@ -1,22 +1,20 @@
 import { Row, Typography, Col, Statistic } from "antd";
-import type { NextPage } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import React from "react";
 import millify from "millify";
 import Link from "next/link";
-import { useGetCryptoQuery } from "src/services/cryptoApi";
+import {
+  cryptoRequest,
+  Stats,
+  useGetCryptoQuery,
+} from "src/services/cryptoApi";
 import Title from "antd/lib/typography/Title";
 import Cryptocurrencies from "src/components/Cryptocurrencies";
 import News from "src/components/News";
 
-const Home: NextPage = () => {
-  const { data, isFetching } = useGetCryptoQuery(10);
-
-  const globalStats = data?.data?.stats;
-
-  if (isFetching || !globalStats) {
-    return <>Loading....</>;
-  }
-
+const Home = ({
+  stats: globalStats,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
       <Typography.Title level={2} className="heading">
@@ -76,5 +74,17 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+export const getServerSideProps: GetServerSideProps<{ stats: Stats }> =
+  async () => {
+    const response = await cryptoRequest.get("/coins?limit=10");
+    const stats = response.data.data.stats;
+
+    return {
+      props: {
+        stats,
+      },
+    };
+  };
 
 export default Home;

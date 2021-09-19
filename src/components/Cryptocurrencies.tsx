@@ -2,13 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import millify from "millify";
 import Link from "next/link";
 import { Card, Row, Col, Input } from "antd";
-import { Coin, useGetCryptoQuery } from "src/services/cryptoApi";
+import { Coin, cryptoRequest, useGetCryptoQuery } from "src/services/cryptoApi";
 import Image from "next/image";
 interface Props {
   simplified?: boolean;
+  list?: any;
 }
 
-function Cryptocurrencies({ simplified = false }: Props) {
+function Cryptocurrencies({ simplified = false, list }: Props) {
   const count = simplified ? 10 : 100;
   const { data: cryptosList, isFetching } = useGetCryptoQuery(count);
   const [cryptos, setCryptos] = useState<Coin[] | undefined>([]);
@@ -74,5 +75,7 @@ function Cryptocurrencies({ simplified = false }: Props) {
     </>
   );
 }
+
+// cryptoRequest
 
 export default Cryptocurrencies;

@@ -47,8 +47,6 @@ function LineChart({ coinHistory, currentPrice, coinName }: Props) {
     },
   };
 
-  console.log(prices, timestamps);
-
   return (
     <>
       <Row className="chart-header">
