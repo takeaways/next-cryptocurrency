@@ -64,7 +64,7 @@ function LineChart({ coinHistory, currentPrice, coinName }: Props) {
           </Title>
         </Col>
       </Row>
-      <Line data={data} options={options} />
+      <Line data={data as any} options={options as any} />
     </>
   );
 }
