@@ -3,7 +3,7 @@ import millify from "millify";
 import Link from "next/link";
 import { Card, Row, Col, Input } from "antd";
 import { Coin, useGetCryptoQuery } from "src/services/cryptoApi";
-
+import Image from "next/image";
 interface Props {
   simplified?: boolean;
 }
@@ -52,7 +52,13 @@ function Cryptocurrencies({ simplified = false }: Props) {
                 <Card
                   title={`${currency.rank}. ${currency.name}`}
                   extra={
-                    <img className="crypto-image" src={currency.iconUrl} />
+                    <Image
+                      width="35px"
+                      height="35px"
+                      className="crypto-image"
+                      src={currency.iconUrl}
+                      alt={currency.name}
+                    />
                   }
                   hoverable
                 >

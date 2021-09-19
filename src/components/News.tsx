@@ -13,7 +13,7 @@ interface Props {
 function News({ simplified = false }: Props) {
   const [newsCategory, setNewsCategory] = useState("Cryptocurrency");
   const handleSelectCategory = useCallback((category) => {
-    console.log("-->", category);
+    setNewsCategory(category);
   }, []);
 
   const { data: cryptoNews } = useGetCryptoNewsQuery({
